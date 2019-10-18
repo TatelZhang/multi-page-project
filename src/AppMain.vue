@@ -25,7 +25,7 @@ export default {
     height: getHeight()
   }),
   computed: {
-    mainStyle () {
+    mainStyle() {
       return { height: this.height + 'px' }
     }
   },
