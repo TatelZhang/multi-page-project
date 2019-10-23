@@ -7,7 +7,7 @@
       <div class="login-title">
         <span>利华贸易和码头仓储管理系统</span>
       </div>
-      <el-form class="login-form" size="large" :model="loginForm" :rules="rules" ref="login">
+      <el-form ref="login" class="login-form" size="large" :model="loginForm" :rules="rules">
         <el-form-item class="login-item" prop="username">
           <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid" placeholder="请输入登陆用户名" />
         </el-form-item>
@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import { login } from '@/api/user'
+// import { login } from '@/api/user'
 export default {
   name: 'LoginPage',
   data: () => ({
@@ -47,7 +47,7 @@ export default {
       this.loading = true
       this.$refs.login.validate(status => {
         console.log(status)
-        if(!status) {
+        if (!status) {
           this.loading = false
           return
         }
@@ -55,7 +55,7 @@ export default {
         this.loading = false
         setTimeout(() => {
           location.href = '/system'
-        }, 1000);
+        }, 1000)
       })
     }
   }

@@ -4,17 +4,10 @@ html, body {
 }
 .main-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  padding-top: 50px;
-  background: pink;
+  width: 100%;
 }
 
 .main-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 50px;
-  background: orange;
+  position: relative;
+  height: 61px;
 }

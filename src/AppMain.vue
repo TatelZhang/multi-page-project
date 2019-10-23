@@ -1,18 +1,18 @@
 <template>
-  <div>
-    <div class="main-container" :style="mainStyle">
-      <app-container />
-    </div>
-    <div class="main-header">
+  <el-container>
+    <el-header class="main-header" style="padding: 0;">
       <app-header />
-    </div>
-  </div>
+    </el-header>
+    <el-main class="main-container" :style="mainStyle">
+      <app-container />
+    </el-main>
+  </el-container>
 </template>
 <script>
 import AppHeader from '@/components/AppHeader'
 import AppContainer from '@/components/AppContainer'
 function getHeight() {
-  const height = window.innerHeight - 50
+  const height = window.innerHeight - 61
   return height > 200 ? height : 200
 }
 export default {
