@@ -9,3 +9,8 @@ export const setToken = (token, rememberMe) => {
 }
 
 export const remeoveToken = () => Cookies.remove(tokenKey)
+
+export const loginRedirect = to => {
+  const pathname = location.pathname
+  location.href = `/login?redirect=${pathname}${to.fullPath}`
+}

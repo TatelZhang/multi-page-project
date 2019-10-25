@@ -3,7 +3,7 @@
     <el-header class="main-header" style="padding: 0;">
       <app-header />
     </el-header>
-    <el-main class="main-container" :style="mainStyle">
+    <el-main class="main-container" :style="mainStyle" style="padding: 0;">
       <app-container />
     </el-main>
   </el-container>

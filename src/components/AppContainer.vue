@@ -1,11 +1,10 @@
 <template>
   <div class="app-container">
-    <el-row>
-      <el-col :span="6">
-        菜单区域
+    <el-row class="full-height">
+      <el-col :span="6" class="full-height">
         <side-menu />
       </el-col>
-      <el-col :span="18">
+      <el-col :span="18" class="full-height">
         内容区域
         <router-view />
       </el-col>
