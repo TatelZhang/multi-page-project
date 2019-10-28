@@ -28,6 +28,9 @@ service.interceptors.response.use(
     return res.data
   },
   error => {
+    // 登录页请求状态
+    // const pathname = location.pathname
+    // if (pathname.startsWith('/login') || pathname === '/') return Promise.reject(error)
     let status = 500
     try {
       status = error.response.status
@@ -48,19 +51,20 @@ service.interceptors.response.use(
     }
     if (status === 401) { // 登陆过期
       remeoveToken()
-      MessageBox.confirm(
+      console.log('error in request', MessageBox)
+      return MessageBox.confirm(
         '登陆状态已过期, 您可以继续留在该页面, 或者重新登陆',
         '系统提示',
         {
           confirmButtonText: '重新登陆',
           cancelButtonText: '取消',
           type: 'warning'
-        }.then(() => {
-          location.href = '/'
-        })
-      )
+        }
+      ).then(() => {
+        location.href = '/' // 暂定
+      })
     }
-    return Promise.error('error')
+    return Promise.reject(error)
   }
 )
 

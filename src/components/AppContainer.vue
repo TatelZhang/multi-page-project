@@ -6,6 +6,9 @@
       </el-col>
       <el-col :span="18" class="full-height">
         内容区域
+        <el-button @click="doClick">
+          测试
+        </el-button>
         <router-view />
       </el-col>
     </el-row>
@@ -17,6 +20,11 @@ export default {
   name: 'AppContainer',
   components: {
     SideMenu
+  },
+  methods: {
+    doClick() {
+      console.log(this.$route)
+    }
   }
 }
 </script>

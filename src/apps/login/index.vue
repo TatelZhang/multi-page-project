@@ -9,13 +9,18 @@
       </div>
       <el-form ref="login" class="login-form" size="large" :model="loginForm" :rules="rules">
         <el-form-item class="login-item" prop="username">
-          <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid" placeholder="请输入登陆用户名" />
+          <el-input v-model="loginForm.username" prefix-icon="el-icon-user-solid" placeholder="请输入登陆用户名" @keydown.enter.native="submitForm" />
         </el-form-item>
-        <el-form-item class="login-item" prop="password">
-          <el-input v-model="loginForm.password" prefix-icon="el-icon-s-tools" placeholder="请输入登陆密码" type="password" />
+        <el-form-item class="little-margin" prop="password">
+          <el-input v-model="loginForm.password" prefix-icon="el-icon-s-tools" placeholder="请输入登陆密码" type="password" @keydown.enter.native="submitForm" />
+        </el-form-item>
+        <el-form-item class="little-margin">
+          <el-checkbox v-model="loginForm.rememberMe">
+            记住密码
+          </el-checkbox>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" style="width: 100%;" :loading="loading" @click="login">
+          <el-button type="primary" style="width: 100%;" :loading="loading" @click="submitForm">
             登陆
           </el-button>
         </el-form-item>
@@ -24,14 +29,16 @@
   </div>
 </template>
 <script>
-// import { login } from '@/api/user'
+import { login } from '@/api/user'
+import { getToken, setToken, goRedirect } from '@/utils/auth'
 export default {
   name: 'LoginPage',
   data: () => ({
     loading: false,
     loginForm: {
       username: '',
-      password: ''
+      password: '',
+      rememberMe: false
     },
     rules: {
       username: [
@@ -42,8 +49,23 @@ export default {
       ]
     }
   }),
+  mounted() {
+    this.getLocalInfo()
+  },
   methods: {
-    login() { // 登陆系统
+    getLocalInfo() { // 获取记住密码信息
+      if (getToken()) { // 确认当前是否登录
+        goRedirect()
+        return
+      }
+      const loginInfo = JSON.parse(localStorage.getItem('loginInfo'))
+      if (!loginInfo) return
+      const { username, password, rememberMe } = loginInfo
+      this.loginForm.username = username
+      this.loginForm.password = password
+      this.loginForm.rememberMe = rememberMe
+    },
+    submitForm() { // 登陆系统
       this.loading = true
       this.$refs.login.validate(status => {
         console.log(status)
@@ -51,11 +73,31 @@ export default {
           this.loading = false
           return
         }
-        // login()
-        this.loading = false
+        this.doLogin().then(() => {
+          this.loading = false
+        }).catch(error => {
+          console.log(error.response)
+          this.loading = false
+        })
+      })
+    },
+    doLogin() {
+      return login(this.loginForm).then(res => {
+        console.log(res)
+        const { rememberMe } = this.loginForm
+        if (rememberMe) { // 是否记住密码
+          localStorage.setItem('loginInfo', JSON.stringify(this.loginForm))
+        } else {
+          localStorage.removeItem('loginInfo')
+        }
+        setToken(res.token, rememberMe) // 设置token
+        localStorage.setItem('userInfo', JSON.stringify(res.user)) // 存储用户信息
         setTimeout(() => {
-          location.href = '/system'
+          goRedirect()
         }, 1000)
+        return Promise.resolve()
+      }).catch(error => {
+        return Promise.reject(error)
       })
     }
   }
@@ -105,6 +147,9 @@ body {
       padding: 20px 25px;
       .login-item {
         margin-bottom: 30px;
+      }
+      .little-margin {
+        margin-bottom: 12px;
       }
     }
   }

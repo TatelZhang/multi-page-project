@@ -1,6 +1,8 @@
 import request from '../utils/request'
 
 export function login(data) {
+  return Promise.resolve({ token: 'asdasdasd' })
+
   return request({
     url: '',
     data,
@@ -9,6 +11,7 @@ export function login(data) {
 }
 
 export function getMenus(app) {
+  return Promise.resolve()
   return request({
     url: '',
     method: 'GET'

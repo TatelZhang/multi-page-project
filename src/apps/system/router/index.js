@@ -15,7 +15,7 @@ const router = new Router({
 
 router.beforeEach((next, to, from) => {
   if (!getToken()) { // 未登录
-    // loginRedirect()
+    loginRedirect(to)
   } else {
     if (!store.getters.hasMenu) { // 未获取目录
       loadMenus(next, to)

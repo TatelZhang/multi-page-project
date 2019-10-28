@@ -46,7 +46,7 @@
             您好,老罗
           </span>
         </li>
-        <li class="exit">
+        <li class="exit" @click="logout">
           <!-- <i class="el-icon-"></i> -->
           <span>退出登录</span>
         </li>
@@ -56,6 +56,8 @@
 </template>
 <script>
 // 顶部菜单
+import { remeoveToken } from '../utils/auth'
+import { MessageBox } from 'element-ui'
 const getIndex = name => {
   switch (name) {
     case '/system': return '1'
@@ -81,6 +83,18 @@ export default {
       if (pathname === path) return 'javascript:void(0);'
       // location.href = path
       return path
+    },
+    logout() {
+      MessageBox.confirm(
+        '是否要退出登录',
+        '退出',
+        {
+          type: 'info'
+        }
+      ).then(() => {
+        remeoveToken()
+        location.href = '/'
+      })
     }
   }
 }
