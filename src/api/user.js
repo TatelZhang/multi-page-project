@@ -18,9 +18,3 @@ export function getMenus(app) {
   }).then(res => {}).catch(() => {})
 }
 
-export function getInfo() {
-  return request({
-    url: 'auth/info',
-    method: 'get'
-  })
-}

@@ -9,7 +9,7 @@ export const setToken = (token, rememberMe) => {
     : Cookies.set(tokenKey, token)
 }
 
-export const remeoveToken = () => Cookies.remove(tokenKey)
+export const removeToken = () => Cookies.remove(tokenKey)
 
 export const loginRedirect = to => { // 带路由参数跳转至登录页面
   const pathname = location.pathname
@@ -23,8 +23,4 @@ export const goRedirect = () => { // 登录后跳转至目标页面
     target = search.replace(/\?redirect=/i, '')
   }
   location.href = target
-}
-
-export function removeToken() {
-  return Cookies.remove(tokenKey)
 }

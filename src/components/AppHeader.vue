@@ -56,7 +56,7 @@
 </template>
 <script>
 // 顶部菜单
-import { remeoveToken } from '../utils/auth'
+import { removeToken } from '../utils/auth'
 import { MessageBox } from 'element-ui'
 const getIndex = name => {
   switch (name) {
@@ -92,7 +92,7 @@ export default {
           type: 'info'
         }
       ).then(() => {
-        remeoveToken()
+        removeToken()
         location.href = '/'
       })
     }
