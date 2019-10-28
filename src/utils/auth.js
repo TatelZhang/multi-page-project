@@ -14,3 +14,7 @@ export const loginRedirect = to => {
   const pathname = location.pathname
   location.href = `/login?redirect=${pathname}${to.fullPath}`
 }
+
+export function removeToken() {
+  return Cookies.remove(tokenKey)
+}

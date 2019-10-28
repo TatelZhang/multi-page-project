@@ -36,7 +36,7 @@ export function getMenu(path) {
             meta: { title: '用户管理' }
           }
         ]
-      },
+      }
     ]
   }
   return menus[path]

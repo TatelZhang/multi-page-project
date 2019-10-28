@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 import { getToken, loginRedirect } from '@/utils/auth'
-import { constantRouterMap, solveAsyncRouter } from './routers'
+import { constantRouterMap, solveAsyncRouter } from './router'
 import { getMenus } from '@/api/user'
 import store from '../store/index'
 const router = new Router({

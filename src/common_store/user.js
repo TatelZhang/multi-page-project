@@ -74,11 +74,6 @@ const user = {
         removeToken()
         resolve()
       })
-    },
-    updateLoadMenus({ commit }) {
-      return new Promise(() => {
-        commit('SET_LOAD_MENUS', false)
-      })
     }
   }
 }

@@ -1,4 +1,5 @@
 <template>
+  <!-- 通用layout页面 -->
   <el-container>
     <el-header class="main-header" style="padding: 0;">
       <app-header />

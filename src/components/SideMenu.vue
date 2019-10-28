@@ -1,7 +1,7 @@
 <template>
   <el-scrollbar class="left-menu">
     <!-- <el-menu>
-      
+
     </el-menu> -->
   </el-scrollbar>
 </template>
