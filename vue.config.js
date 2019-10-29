@@ -26,8 +26,8 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        // target: 'http://192.168.31.249:8000',
-        target: 'http://evidence.zxyinfo.com',
+        target: 'http://192.168.31.249:8000',
+        // target: 'http://evidence.zxyinfo.com',
         changeOrigin: true,
         ws: true,
         pathRewrite: {
