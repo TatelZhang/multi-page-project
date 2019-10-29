@@ -2,10 +2,9 @@ import request from '../utils/request'
 import menus from './menus.js'
 
 export function login(data) {
-  return Promise.resolve({ token: 'asdasdasd' })
-
+  // return Promise.resolve({ token: 'asdasdasd' })
   return request({
-    url: '',
+    url: '/sys/login',
     data,
     method: 'post'
   })

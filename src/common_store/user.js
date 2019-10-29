@@ -10,11 +10,13 @@ const user = {
   getters: {
     roles: state => state.roles,
     hasMenu: state => state.menus.length > 0,
-    sideMenus: state => state.menus
+    sideMenus: state => state.menus,
+    userName: state => state.userInfo.realname
   },
 
   mutations: {
     SET_UserInfo: (state, userInfo) => {
+      // console.log('userinfo', userInfo)
       state.userInfo = userInfo
     },
     SET_Menus: (state, menus) => {

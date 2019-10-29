@@ -43,7 +43,7 @@
         <li class="user-info">
           <img :src="require('@/assets/image/logo.svg')" alt="" class="avatar">
           <span>
-            您好,老罗
+            您好,{{ userName }}
           </span>
         </li>
         <li class="exit" @click="logout">
@@ -58,7 +58,7 @@
 // 顶部菜单
 import { removeToken } from '../utils/auth'
 import { MessageBox } from 'element-ui'
-
+import { mapGetters } from 'vuex'
 const getIndex = name => {
   switch (name) {
     case '/system': return '1'
@@ -74,7 +74,13 @@ export default {
   data: () => ({
     currentIndex: '1'
   }),
+  computed: {
+    ...mapGetters([
+      'userName'
+    ])
+  },
   mounted() {
+    this.$store.dispatch('initUserData')
     const pathname = location.pathname
     this.currentIndex = getIndex(pathname)
   },

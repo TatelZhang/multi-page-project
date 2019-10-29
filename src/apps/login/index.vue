@@ -31,6 +31,7 @@
 <script>
 import { login } from '@/api/user'
 import { getToken, setToken, goRedirect } from '@/utils/auth'
+import { Notification, Message } from 'element-ui'
 export default {
   name: 'LoginPage',
   data: () => ({
@@ -74,29 +75,38 @@ export default {
         }
         this.doLogin().then(() => {
           this.loading = false
-        }).catch(error => {
-          console.log(error.response)
+          Message.success('登录成功')
+        }).catch(message => {
           this.loading = false
+          Notification.error({
+            title: '错误',
+            message
+          })
         })
       })
     },
     doLogin() {
       return login(this.loginForm).then(res => {
         console.log(res)
+        const { code, message, result } = res
+        if(code !== 200) {
+          return Promise.reject(message)
+        }
+        const { token, userInfo } = result
         const { rememberMe } = this.loginForm
         if (rememberMe) { // 是否记住密码
           localStorage.setItem('loginInfo', JSON.stringify(this.loginForm))
         } else {
           localStorage.removeItem('loginInfo')
         }
-        setToken(res.token, rememberMe) // 设置token
-        localStorage.setItem('userInfo', JSON.stringify(res.user)) // 存储用户信息
+        setToken(token, rememberMe) // 设置token
+        localStorage.setItem('userInfo', JSON.stringify(userInfo)) // 存储用户信息
         setTimeout(() => {
           goRedirect()
         }, 1000)
         return Promise.resolve()
-      }).catch(error => {
-        return Promise.reject(error)
+      }).catch(message => {
+        return Promise.reject(message || '系统错误, 请联系管理员')
       })
     }
   }
