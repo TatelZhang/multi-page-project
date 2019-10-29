@@ -1,10 +1,10 @@
 <template>
   <div class="app-container">
     <el-row class="full-height">
-      <el-col :span="6" class="full-height">
+      <el-col :span="4" class="full-height">
         <side-menu />
       </el-col>
-      <el-col :span="18" class="full-height">
+      <el-col :span="20" class="full-height">
         内容区域
         <el-button @click="doClick">
           测试
@@ -41,6 +41,7 @@ export default {
 </script>
 <style lang="scss" scoped>
   .app-container {
+    position: relative;
     width: 100%;
     height: 100%;
   }
