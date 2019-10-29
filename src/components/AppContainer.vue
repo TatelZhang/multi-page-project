@@ -21,9 +21,20 @@ export default {
   components: {
     SideMenu
   },
+  watch: {
+    $route(val) {
+      console.log('路由变更', val)
+    }
+  },
+  // computed: {
+  //   $route() {
+  //     return this.$route
+  //   }
+  // },
   methods: {
     doClick() {
       console.log(this.$route)
+      // this.$router.push({path: '/test'})
     }
   }
 }

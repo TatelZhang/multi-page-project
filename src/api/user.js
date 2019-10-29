@@ -1,4 +1,5 @@
 import request from '../utils/request'
+import menus from './menus.js'
 
 export function login(data) {
   return Promise.resolve({ token: 'asdasdasd' })
@@ -11,7 +12,7 @@ export function login(data) {
 }
 
 export function getMenus(app) {
-  return Promise.resolve()
+  return Promise.resolve(menus[app])
   return request({
     url: '',
     method: 'GET'

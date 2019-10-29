@@ -68,7 +68,6 @@ export default {
     submitForm() { // 登陆系统
       this.loading = true
       this.$refs.login.validate(status => {
-        console.log(status)
         if (!status) {
           this.loading = false
           return

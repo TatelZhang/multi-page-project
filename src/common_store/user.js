@@ -5,21 +5,20 @@ const user = {
     token: getToken(),
     userInfo: {},
     // 第一次加载菜单时用到
-    loadMenus: false,
     menus: []
   },
   getters: {
     roles: state => state.roles,
-    loadMenus: state => state.loadMenus,
-    hasMenu: state => state.menus.length > 0
+    hasMenu: state => state.menus.length > 0,
+    sideMenus: state => state.menus
   },
 
   mutations: {
     SET_UserInfo: (state, userInfo) => {
       state.userInfo = userInfo
     },
-    SET_LOAD_MENUS: (state, loadMenus) => {
-      state.loadMenus = loadMenus
+    SET_Menus: (state, menus) => {
+      state.menus = menus
     }
   },
 
@@ -30,6 +29,10 @@ const user = {
         const userInfo = JSON.parse(userInfoStr)
         commit('SET_UserInfo', userInfo)
       }
+    },
+    initMenu({ commit }, menus) { // 获取目录
+      console.log('获取目录')
+      commit('SET_Menus', menus)
     }
   }
 }

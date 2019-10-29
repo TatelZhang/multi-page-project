@@ -1,7 +1,9 @@
 import axios from 'axios'
 import config from '../config'
-import { getToken, remeoveToken } from '../utils/auth'
+import { getToken, removeToken } from '../utils/auth'
 import { Notification, MessageBox } from 'element-ui'
+import { logoutFromThisPage } from '@/utils/auth'
+
 const service = axios.create({
   baseURL: config.baseURL,
   timeout: config.timeout
@@ -50,7 +52,7 @@ service.interceptors.response.use(
       return Promise.reject(error)
     }
     if (status === 401) { // 登陆过期
-      remeoveToken()
+      removeToken()
       console.log('error in request', MessageBox)
       return MessageBox.confirm(
         '登陆状态已过期, 您可以继续留在该页面, 或者重新登陆',
@@ -61,7 +63,7 @@ service.interceptors.response.use(
           type: 'warning'
         }
       ).then(() => {
-        location.href = '/' // 暂定
+        logoutFromThisPage() // 暂定
       })
     }
     return Promise.reject(error)

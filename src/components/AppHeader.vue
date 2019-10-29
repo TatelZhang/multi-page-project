@@ -58,6 +58,7 @@
 // 顶部菜单
 import { removeToken } from '../utils/auth'
 import { MessageBox } from 'element-ui'
+
 const getIndex = name => {
   switch (name) {
     case '/system': return '1'
