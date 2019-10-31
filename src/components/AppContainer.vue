@@ -4,7 +4,7 @@
       <el-col :span="4" class="full-height">
         <side-menu />
       </el-col>
-      <el-col :span="20" class="full-height">
+      <el-col :span="20" class="full-height" style="padding: 10px;">
         <router-view />
       </el-col>
     </el-row>
