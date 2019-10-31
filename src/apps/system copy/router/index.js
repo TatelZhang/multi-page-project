@@ -5,6 +5,11 @@ import { getToken, loginRedirect } from '@/utils/auth'
 import store from '../store/index'
 import { getMenus } from '@/api/user'
 
+const originalPush = Router.prototype.push // vue-router重复点击报错修复
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 Vue.use(Router)
 const router = new Router({
   mode: 'hash',
@@ -33,7 +38,6 @@ router.beforeEach((to, from, next) => {
 export const loadMenus = (to, next) => {
   getMenus('system').then(res => {
     const asyncRouter = solveAsyncRouter(res)
-    console.log(asyncRouter)
     // asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
     store.dispatch('initMenu', res).then(() => {
       router.addRoutes(asyncRouter)
@@ -53,7 +57,6 @@ export const solveAsyncRouter = (routers, sup_path = '') => { // 根据返回rou
       const path = router.path || ''
       const routerPath = `${sup_path}${path}` // 当前嵌套根节点路由路径
       router.children = solveAsyncRouter(router.children, routerPath)
-      console.log(router)
       router.redirect = `${routerPath}/${router.children[0].path}`
       router.component = { render: h => h('router-view') }
     } else {
