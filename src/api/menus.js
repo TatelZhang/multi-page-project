@@ -23,20 +23,38 @@ export default {
     {
       name: '权限管理',
       component: 'Layout',
-      path: '/permission',
+      path: '/management',
       meta: { title: '权限管理' },
       children: [
         {
+          name: '接口权限管理',
+          component: '/management/permission',
+          path: 'permission',
+          meta: { title: '接口权限管理' }
+        },
+        {
+          name: '组织人员管理',
+          component: '/management/people',
+          path: 'people',
+          meta: { title: '组织人员管理' }
+        },
+        {
           name: '角色管理',
-          component: '/permission/role',
+          component: '/management/role',
           path: 'role',
           meta: { title: '角色管理' }
         },
         {
           name: '用户管理',
-          component: '/permission/user',
+          component: '/management/user',
           path: 'user',
           meta: { title: '用户管理' }
+        },
+        {
+          name: '菜单管理',
+          component: '/management/menu',
+          path: 'menu',
+          meta: { title: '菜单管理' }
         }
       ]
     }

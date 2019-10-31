@@ -89,7 +89,7 @@ export default {
       return login(this.loginForm).then(res => {
         console.log(res)
         const { code, message, result } = res
-        if(code !== 200) {
+        if (code !== 200) {
           return Promise.reject(message)
         }
         const { token, userInfo } = result

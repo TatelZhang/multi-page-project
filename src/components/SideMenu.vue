@@ -23,9 +23,6 @@ export default {
     ])
   },
   watch: {
-    sideMenus(val) {
-      console.log('侧边目录', val)
-    }
   }
 }
 </script>
