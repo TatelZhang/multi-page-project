@@ -4,6 +4,11 @@ const entryPath = (appName) => {
 }
 
 module.exports = {
+  configureWebpack: config => { // 生产环境取消console
+    if (process.env.NODE_ENV === 'production') {
+      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
+    }
+  },
   pages: {
     index: {
       entry: entryPath('login'),
@@ -34,12 +39,6 @@ module.exports = {
           '^/api': '/wms'
         }
       }
-    }
-  },
-  configureWebpack: config => {
-    // config.entry.app = ['@babel/polyfill', './src/main.js']
-    if (process.env.NODE_ENV === 'production') {
-      config.optimization.minimizer[0].options.terserOptions.compress.drop_console = true
     }
   }
 }

@@ -5,10 +5,6 @@
         <side-menu />
       </el-col>
       <el-col :span="20" class="full-height">
-        内容区域
-        <el-button @click="doClick">
-          测试
-        </el-button>
         <router-view />
       </el-col>
     </el-row>
@@ -20,22 +16,6 @@ export default {
   name: 'AppContainer',
   components: {
     SideMenu
-  },
-  watch: {
-    $route(val) {
-      console.log('路由变更', val)
-    }
-  },
-  // computed: {
-  //   $route() {
-  //     return this.$route
-  //   }
-  // },
-  methods: {
-    doClick() {
-      console.log(this.$route)
-      // this.$router.push({path: '/test'})
-    }
   }
 }
 </script>

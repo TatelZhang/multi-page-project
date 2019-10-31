@@ -91,7 +91,7 @@ export default {
       // location.href = path
       return path
     },
-    logout() {
+    logout() { // 退出登录回到登录页, 不进行重定向
       MessageBox.confirm(
         '是否要退出登录',
         '退出',
