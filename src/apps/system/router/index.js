@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import { getToken, loginRedirect } from '@/utils/auth'
 // import { constantRouterMap, solveAsyncRouter } from './router'
 import store from '../store/index'
-import { getMenus } from '@/api/user'
+import { getMenus } from '@/api/menu'
 
 const originalPush = Router.prototype.push // vue-router重复点击报错修复
 Router.prototype.push = function push(location) {
