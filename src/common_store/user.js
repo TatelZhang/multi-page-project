@@ -33,7 +33,6 @@ const user = {
       }
     },
     initMenu({ commit }, menus) { // 获取目录
-      console.log('获取目录')
       commit('SET_Menus', menus)
     }
   }

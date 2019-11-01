@@ -23,7 +23,7 @@ const router = new Router({
 })
 
 router.beforeEach((to, from, next) => {
-  // console.log('before each', to)
+  console.log('before each', to)
   if (!getToken()) { // 未登录
     loginRedirect(to)
   } else {
