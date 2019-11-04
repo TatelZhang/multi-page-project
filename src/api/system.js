@@ -1,2 +1,2 @@
-import request from '../utils/request'
-import menus from './menus.js'
+// import request from '../utils/request'
+// import menus from './menus.js'

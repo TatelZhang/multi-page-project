@@ -13,7 +13,7 @@
         </el-button>
       </el-form-item>
     </el-form>
-    <el-table v-loading="loading" :data="data" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id" size="small" ref="table">
+    <el-table ref="table" v-loading="loading" :data="data" :tree-props="{children: 'children', hasChildren: 'hasChildren'}" row-key="id" size="small">
       <el-table-column :show-overflow-tooltip="true" label="菜单名称" width="125px" prop="name" />
       <el-table-column prop="icon" label="图标" align="center" width="60">
         <template slot-scope="{ row }">
@@ -41,26 +41,26 @@
                 确定
               </el-button>
             </div>
-            <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini"/>
+            <el-button slot="reference" type="danger" icon="el-icon-delete" size="mini" />
           </el-popover>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="menu-dialog thin-dialog" :before-close="resetDialog">
-      <el-form size="mini" label-width="80px" :model="menuItemData" :rules="rules" style="width: 90%; margin: 0 auto;" ref="menuDiaolog">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="system-dialog thin-dialog" :before-close="resetDialog">
+      <el-form ref="menuDiaolog" size="mini" label-width="80px" :model="menuItemData" :rules="rules" style="width: 90%; margin: 0 auto;">
         <el-form-item label="菜单名称" prop="name">
-          <el-input v-model="menuItemData.name" placeholder="请输入菜单名称"/>
+          <el-input v-model="menuItemData.name" placeholder="请输入菜单名称" />
         </el-form-item>
         <el-form-item label="组件地址">
-          <el-input v-model="menuItemData.component" placeholder="请输入组件地址"/>
+          <el-input v-model="menuItemData.component" placeholder="请输入组件地址" />
         </el-form-item>
         <el-form-item label="菜单图标">
-          <el-input v-model="menuItemData.icon"/>
+          <el-input v-model="menuItemData.icon" />
         </el-form-item>
         <el-row>
           <el-col :lg="12" :xs="24">
             <el-form-item label="菜单路径">
-              <el-input v-model="menuItemData.path" placeholder="请输入菜单路径"/>
+              <el-input v-model="menuItemData.path" placeholder="请输入菜单路径" />
             </el-form-item>
           </el-col>
           <el-col :lg="12" :xs="24">
@@ -70,12 +70,16 @@
           </el-col>
         </el-row>
         <el-form-item label="上级类目">
-          <treeselect v-model="menuItemData.pid" :options="treeData" placeholder="请选择上级类目"/>
+          <treeselect v-model="menuItemData.pid" :options="treeData" placeholder="请选择上级类目" />
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: right;">
-        <el-button type="text" size="small" @click="dialogShowStatus=false">取消</el-button>
-        <el-button type="primary" size="small">确认</el-button>
+        <el-button type="text" size="small" @click="dialogShowStatus=false">
+          取消
+        </el-button>
+        <el-button type="primary" size="small">
+          确认
+        </el-button>
       </div>
     </el-dialog>
   </div>
@@ -102,12 +106,12 @@ export default {
       path: '',
       icon: '',
       sort: 1,
-      component: '',  // 组件路径
+      component: '', // 组件路径
       pid: null // 父级id
     },
     treeData: [],
     rules: {
-      name: [{required: true, message: '请输入菜单名称'}]
+      name: [{ required: true, message: '请输入菜单名称' }]
     }
   }),
   mounted() {
@@ -117,7 +121,6 @@ export default {
   methods: {
     addMenu() {
       this.dialogShowStatus = true
-
     },
     resetDialog(done) {
       this.menuItemData = { // 新增菜单数据
@@ -125,17 +128,17 @@ export default {
         path: '',
         icon: '',
         sort: 1,
-        component: '',  // 组件路径
+        component: '', // 组件路径
         pid: null // 父级id
       }
       this.$refs['menuDiaolog'].resetFields()
       this.isAdd = true
       done()
     },
-    edit(row) {  // 编辑菜单
+    edit(row) { // 编辑菜单
       console.log(row)
       const { name, path, icon, sort, component, pid } = row
-      this.menuItemData = { name, path, icon, sort, component, pid: pid === 0 ? null: pid }
+      this.menuItemData = { name, path, icon, sort, component, pid: pid === 0 ? null : pid }
       this.isAdd = false
       this.dialogShowStatus = true
     },
