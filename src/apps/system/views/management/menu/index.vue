@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="system-dialog thin-dialog" :before-close="resetDialog">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="system-dialog thin-dialog" @close="resetDialog">
       <el-form ref="menuDiaolog" size="mini" label-width="80px" :model="menuItemData" :rules="rules" style="width: 90%; margin: 0 auto;">
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menuItemData.name" placeholder="请输入菜单名称" />
@@ -133,7 +133,7 @@ export default {
       }
       this.$refs['menuDiaolog'].resetFields()
       this.isAdd = true
-      done()
+      // done()
     },
     edit(row) { // 编辑菜单
       console.log(row)

@@ -14,7 +14,7 @@
         <el-button icon="el-icon-search" type="primary">
           搜索
         </el-button>
-        <el-button icon="el-icon-plus" type="success">
+        <el-button icon="el-icon-plus" type="success" @click="showUserDialog">
           新增
         </el-button>
       </el-form-item>
@@ -72,31 +72,50 @@
       @size-change="sizeChange"
       @current-change="pageChange"
     />
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="system-dialog thin-dialog" :before-close="resetDialog">
-      <el-form ref="userDiaolog" size="mini" label-width="80px" :model="userItemData" :rules="rules" style="margin: 0 auto;" inline>
-        <el-form-item label="用户名" prop="name">
-          <el-input v-model="userItemData.name" placeholder="" />
-        </el-form-item>
-        <el-form-item label="状态">
-          <el-radio v-model="userItemData.status" :label="0">
-            激活
-          </el-radio>
-          <el-radio v-model="userItemData.status" :label="1">
-            禁用
-          </el-radio>
-        </el-form-item>
-        <el-form-item label="电话">
-          <el-input v-model="userItemData.phone" placeholder="" />
-        </el-form-item>
-        <el-form-item label="邮箱">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="system-dialog thin-dialog" @close="resetDialog">
+      <el-form ref="userDiaolog" size="mini" label-width="60px" :model="userItemData" :rules="rules" style="width: 100%; margin: 0 auto;">
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="用户名" prop="name">
+              <el-input v-model="userItemData.name" placeholder="" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="密码">
+              <el-input type="password" v-model="userItemData.password" placeholder="" :disabled="!isAdd"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="电话">
+              <el-input v-model="userItemData.phone" placeholder="" />
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
+            <el-form-item label="状态">
+              <el-radio v-model="userItemData.status" :label="true">
+                激活
+              </el-radio>
+              <el-radio v-model="userItemData.status" :label="false">
+                禁用
+              </el-radio>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <!-- <el-form-item label="邮箱">
           <el-input v-model="userItemData.email" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="部门">
-          <el-input v-model="userItemData.role" />
+          <treeselect v-model="userItemData.dpt" :options="departmentsList" placeholder="请选择部门" />
         </el-form-item>
-
         <el-form-item label="角色">
-          <treeselect v-model="userItemData.pid" :options="[]" placeholder="请选择上级类目" style="width: 420px;" />
+          <el-select v-model="userItemData.role" style="width: 100%;" multiple placeholder="请选择角色">
+            <el-option
+              v-for="(role, index) in roleList"
+              :key="roleList + index"
+              :label="role.name"
+              :value="role.id"
+            ></el-option>
+          </el-select>
         </el-form-item>
       </el-form>
       <div slot="footer" style="text-align: right;">
@@ -112,9 +131,12 @@
 </template>
 <script>
 import data from './data.json'
+import roleList from './roleList.json'
+import dptList from './dpt.json'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import { parseTime } from '@/utils/index'
+import { edit } from '@/api/user'
 export default {
   name: 'UserManage',
   components: {
@@ -123,7 +145,7 @@ export default {
   data: () => ({
     loading: false,
     delLoading: false,
-    dialogShowStatus: true,
+    dialogShowStatus: false,
     isAdd: true,
     query: {
       status: 0
@@ -133,15 +155,22 @@ export default {
     page: 1,
     rules: {},
     userItemData: {
-      status: 0
-    }
+      name: '',
+      password: '',
+      status: true,
+      phone: '',
+      dpt: null,
+      role: []
+    },
+    departmentsList: dptList.content || [],
+    roleList: roleList || []
   }),
   mounted() {
     this.data = data.content
   },
   methods: {
     parseTime,
-    changeEnabled(data, val) {
+    changeEnabled(data, val) {  // 变更锁定状态
       this.$confirm('此操作将 "' + this.dict.label.user_status[val] + '" ' + data.username + ', 是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -161,19 +190,42 @@ export default {
         data.enabled = !data.enabled
       })
     },
-    doClose() {
+    doClose() { // 关闭popover
       document.body.click()
     },
-    edit() {
-
+    edit(row) {
+      console.log(row)
+      this.dialogShowStatus = true
+      this.isAdd = false
+      const {dept:{id}, username, phone, enabled, roles} = row
+      this.userItemData = {
+        name: username,
+        dpt: id===0 ? id : id || null,
+        phone,
+        status: enabled,
+        role: roles.map(item=>item.id)
+      }
     },
     subDelete() {
 
     },
     sizeChange() {},
     pageChange() {},
-    resetDialog(done) {
-      done()
+    showUserDialog() {
+      this.dialogShowStatus = true
+    },
+    resetDialog() {
+      console.log('关闭模态框')
+      this.userItemData = {
+        name: '',
+        password: '',
+        status: 0,
+        phone: '',
+        dpt: null,
+        role: []
+      }
+      this.isAdd = true
+      // done()
     }
   }
 }

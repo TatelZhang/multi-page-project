@@ -8,3 +8,7 @@ export function login(data) {
     method: 'post'
   })
 }
+
+export function edit(data) {
+  return Promise.resolve({})
+}
