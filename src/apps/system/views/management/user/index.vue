@@ -1,7 +1,7 @@
 <template>
   <div class="user-page">
     <el-form size="mini" inline>
-      <el-form-item>
+      <el-form-item label="用户">
         <el-input placeholder="搜索用户" />
       </el-form-item>
       <el-form-item>
@@ -72,7 +72,7 @@
       @size-change="sizeChange"
       @current-change="pageChange"
     />
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="system-dialog thin-dialog" @close="resetDialog">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="thin-dialog" @close="resetDialog" :close-on-click-modal="false">
       <el-form ref="userDiaolog" size="mini" label-width="60px" :model="userItemData" :rules="rules" style="width: 100%; margin: 0 auto;">
         <el-row>
           <el-col :span="12">
@@ -230,8 +230,3 @@ export default {
   }
 }
 </script>
-<style lang="scss">
-.user-dialog .el-form label {
-  font-weight: 700;
-}
-</style>

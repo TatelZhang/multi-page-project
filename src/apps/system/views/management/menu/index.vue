@@ -1,7 +1,7 @@
 <template>
   <div class="menu-page">
     <el-form size="mini" inline>
-      <el-form-item>
+      <el-form-item label="菜单">
         <el-input v-model="keyword" clearable placeholder="模糊搜索" size="mini" style="width: 200px;" />
       </el-form-item>
       <el-form-item>
@@ -46,7 +46,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="system-dialog thin-dialog" @close="resetDialog">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增菜单' : '编辑菜单'" width="580px" class="system-dialog thin-dialog" @close="resetDialog" :close-on-click-modal="false">
       <el-form ref="menuDiaolog" size="mini" label-width="80px" :model="menuItemData" :rules="rules" style="width: 90%; margin: 0 auto;">
         <el-form-item label="菜单名称" prop="name">
           <el-input v-model="menuItemData.name" placeholder="请输入菜单名称" />
@@ -156,7 +156,5 @@ export default {
 }
 </script>
 <style lang="scss">
-.menu-dialog .el-form label {
-  font-weight: 700;
-}
+
 </style>
