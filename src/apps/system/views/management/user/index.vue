@@ -72,7 +72,7 @@
       @size-change="sizeChange"
       @current-change="pageChange"
     />
-    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="thin-dialog" @close="resetDialog" :close-on-click-modal="false">
+    <el-dialog :visible.sync="dialogShowStatus" :title="isAdd ? '新增用户' : '编辑用户'" width="600px" class="thin-dialog" :close-on-click-modal="false" @close="resetDialog">
       <el-form ref="userDiaolog" size="mini" label-width="60px" :model="userItemData" :rules="rules" style="width: 100%; margin: 0 auto;">
         <el-row>
           <el-col :span="12">
@@ -82,7 +82,7 @@
           </el-col>
           <el-col :span="12">
             <el-form-item label="密码">
-              <el-input type="password" v-model="userItemData.password" placeholder="" :disabled="!isAdd"/>
+              <el-input v-model="userItemData.password" type="password" placeholder="" :disabled="!isAdd" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
@@ -114,7 +114,7 @@
               :key="roleList + index"
               :label="role.name"
               :value="role.id"
-            ></el-option>
+            />
           </el-select>
         </el-form-item>
       </el-form>
@@ -170,7 +170,7 @@ export default {
   },
   methods: {
     parseTime,
-    changeEnabled(data, val) {  // 变更锁定状态
+    changeEnabled(data, val) { // 变更锁定状态
       this.$confirm('此操作将 "' + this.dict.label.user_status[val] + '" ' + data.username + ', 是否继续？', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
@@ -197,13 +197,13 @@ export default {
       console.log(row)
       this.dialogShowStatus = true
       this.isAdd = false
-      const {dept:{id}, username, phone, enabled, roles} = row
+      const { dept: { id }, username, phone, enabled, roles } = row
       this.userItemData = {
         name: username,
-        dpt: id===0 ? id : id || null,
+        dpt: id === 0 ? id : id || null,
         phone,
         status: enabled,
-        role: roles.map(item=>item.id)
+        role: roles.map(item => item.id)
       }
     },
     subDelete() {
