@@ -119,9 +119,9 @@ export default {
         remark: ''
       }
       this.$refs.menu.setCheckedKeys([])
-      this.$refs.menu.$children.forEach(item => item.expanded = false)
+      this.$refs.menu.$children.forEach(item => { item.expanded = false; return })
       this.$refs.permission.setCheckedKeys([])
-      this.$refs.permission.$children.forEach(item => item.expanded = false)
+      this.$refs.permission.$children.forEach(item => { item.expanded = false; return })
       // console.log(this.$refs.menu)
     },
     addRole() {

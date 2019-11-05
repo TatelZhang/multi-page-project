@@ -1,6 +1,6 @@
 <template>
   <el-dialog ref="modal" :visible.sync="showStatus" title="编辑角色" class="thin-dialog" center :close-on-click-modal="false" width="800px" top="50px" @close="beforeClose">
-    <el-tabs tab-position="left" v-model="active" class="role-tab">
+    <el-tabs v-model="active" tab-position="left" class="role-tab">
       <el-tab-pane label="基本信息" name="info">
         <el-form label-width="80px" size="mini" class="role-content">
           <el-form-item label="角色名称">
@@ -49,7 +49,9 @@
       </el-tab-pane>
     </el-tabs>
     <div slot="footer" style="text-align: center;">
-      <el-button type="primary" @click="saveRoleChange">保存修改</el-button>
+      <el-button type="primary" @click="saveRoleChange">
+        保存修改
+      </el-button>
     </div>
   </el-dialog>
 </template>
@@ -86,9 +88,9 @@ export default {
     beforeClose() {
       this.active = 'info'
       this.$refs.menu.setCheckedKeys([])
-      this.$refs.menu.$children.forEach(item => item.expanded = false)
+      this.$refs.menu.$children.forEach(item => { item.expanded = false; return })
       this.$refs.permission.setCheckedKeys([])
-      this.$refs.permission.$children.forEach(item => item.expanded = false)
+      this.$refs.permission.$children.forEach(item => { item.expanded = false; return })
     },
     saveRoleChange() {
       // console.log(this.menuIds)
